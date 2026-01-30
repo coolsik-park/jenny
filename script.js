@@ -100,7 +100,7 @@ if ('IntersectionObserver' in window) {
 
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const targetId = this.getAttribute('href');
         if (targetId === '#') return;
@@ -201,7 +201,7 @@ lightbox.addEventListener('click', (e) => {
 // Keyboard navigation
 document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('active')) return;
-    
+
     if (e.key === 'Escape') {
         closeLightbox();
     } else if (e.key === 'ArrowLeft') {
@@ -210,3 +210,43 @@ document.addEventListener('keydown', (e) => {
         showNextImage();
     }
 });
+
+// Touch swipe support for mobile
+let touchStartX = 0;
+let touchEndX = 0;
+let touchStartY = 0;
+let touchEndY = 0;
+
+function handleSwipe() {
+    const swipeThreshold = 50; // Minimum distance for a swipe
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    // Only trigger swipe if horizontal movement is greater than vertical
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (Math.abs(deltaX) > swipeThreshold) {
+            if (deltaX > 0) {
+                // Swipe right - show previous image
+                showPrevImage();
+            } else {
+                // Swipe left - show next image
+                showNextImage();
+            }
+        }
+    }
+}
+
+lightbox.addEventListener('touchstart', (e) => {
+    if (e.target === lightboxImg || e.target.closest('.lightbox-content')) {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    }
+}, { passive: true });
+
+lightbox.addEventListener('touchend', (e) => {
+    if (e.target === lightboxImg || e.target.closest('.lightbox-content')) {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
+    }
+}, { passive: true });
