@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background -->
+  <rect width="32" height="32" rx="6" fill="#d4a574"/>
+  
+  <!-- Letter J in elegant style -->
+  <path d="M 16 8 
+           L 18.5 8
+           L 18.5 19
+           Q 18.5 22 16 22
+           Q 13.5 22 13.5 19
+           L 15.5 19
+           Q 15.5 20 16 20
+           Q 16.5 20 16.5 19
+           L 16.5 8
+           Z" 
+        fill="white"/>
+  
+  <!-- Decorative dot -->
+  <circle cx="16" cy="6" r="1.2" fill="white"/>
+</svg>
