@@ -505,7 +505,7 @@ section {
 
 .about-image {
     aspect-ratio: 1;
-    background-image: url('images/cosmetic.jpg');
+    background-image: url('images/profile/profile.png');
     background-size: cover;
     background-position: center;
     border-radius: 50%;
