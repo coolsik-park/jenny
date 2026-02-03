@@ -140,7 +140,7 @@ const lightboxCounter = document.getElementById('lightbox-counter');
 const lightboxClose = document.getElementById('lightbox-close');
 const lightboxPrev = document.getElementById('lightbox-prev');
 const lightboxNext = document.getElementById('lightbox-next');
-const galleryItems = document.querySelectorAll('.gallery-item img');
+const galleryItems = document.querySelectorAll('.gallery-item img, .store-gallery-item img');
 
 let currentImageIndex = 0;
 const images = Array.from(galleryItems).map(img => ({
@@ -180,10 +180,21 @@ function showNextImage() {
 
 // Add click events to gallery items
 galleryItems.forEach((img, index) => {
-    img.parentElement.addEventListener('click', () => {
+    const clickHandler = (e) => {
+        e.stopPropagation();
         openLightbox(index);
-    });
-    img.parentElement.style.cursor = 'pointer';
+    };
+
+    // Add click to image
+    img.addEventListener('click', clickHandler);
+    img.style.cursor = 'pointer';
+
+    // Also add click to parent for gallery-item (care gallery)
+    const parent = img.parentElement;
+    if (parent.classList.contains('gallery-item') || parent.classList.contains('store-gallery-item')) {
+        parent.addEventListener('click', clickHandler);
+        parent.style.cursor = 'pointer';
+    }
 });
 
 // Lightbox controls
